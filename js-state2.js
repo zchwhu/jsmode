@@ -1,0 +1,59 @@
+/**
+ * Created by Administrator on 2016/12/22 0022.
+ */
+var MarryState = function () {
+    var _currentState = {},
+        ststes = {
+            jump:function () {
+                console.log('jump')
+            },
+            move:function () {
+                console.log('move')
+            },
+            shoot:function () {
+                console.log('shoot')
+            },
+            squat:function () {
+                console.log('squat')
+            }
+        };
+    var Action = {
+        changeState:function () {
+            var arg = arguments;
+            _currentState = {};
+            if (arg.length){
+                for (var i = 0,len = arg.length;i<len;i++){
+                    _currentState[arg[i]] = true;
+                }
+            }
+            return this;
+        },
+        goes:function () {
+            console.log('触发一次动作');
+            for(var i in _currentState){
+                ststes[i]&&ststes[i]();
+            }
+            return this;
+        }
+    }
+
+    return {
+        change:Action.changeState,
+        goes:Action.goes
+    }
+}
+
+MarryState()
+    .change('jump','shoot')
+    .goes()
+    .goes()
+    .change('shoot')
+    .goes();
+
+var marry = new MarryState();
+marry
+    .change('jump','shoot')
+    .goes()
+    .goes()
+    .change('shoot')
+    .goes();
